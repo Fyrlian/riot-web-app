@@ -1,0 +1,59 @@
+<div class="container">
+  <video class="video-background" autoplay muted loop>
+    <source src="assets/videos/main-background.mp4" type="video/mp4" />
+    Tu navegador no soporta video HTML5.
+  </video>
+
+  <div class="overlay"></div>
+
+  <form (ngSubmit)="sendInfo()" class="form-horizontal" #form="ngForm">
+    <div class="inputs-row" >
+      <select [(ngModel)]="region" name="region" class="select-wrapper" required>
+        <option value="europe">EUW</option>
+        <option value="americas">NA</option>
+        <option value="asia">JP</option>
+      </select>
+
+      <div class="nebula-input" >
+        <input
+          type="text"
+          name="invocador"
+          class="input"
+          placeholder=" "
+          [(ngModel)]="summonerName"
+          required
+          autocomplete="off"
+        />
+        <label class="user-label">Escribe tu nombre de invocador</label>
+        <span class="nebula-particle" style="--x:0.8; --y:0.5"></span>
+        <span class="nebula-particle" style="--x:0.6; --y:0.8"></span>
+        <span class="nebula-particle" style="--x:0.5; --y:-0.7"></span>
+        <span class="nebula-particle" style="--x:0.9; --y:-0.4"></span>
+        <span class="nebula-particle" style="--x:0.2; --y:-0.2"></span>
+        <span class="nebula-particle" style="--x:0.1; --y:0.9"></span>
+
+        
+      </div>
+
+      <div class="nebula-input">
+        <input
+          type="text"
+          name="tag"
+          class="input"
+          placeholder=" "
+          [(ngModel)]="summonerTag"
+          required
+          autocomplete="off"
+        />
+        <label class="user-label">Tag</label>
+        <span class="nebula-particle" style="--x:0.8; --y:0.5"></span>
+        <span class="nebula-particle" style="--x:0.6; --y:0.8"></span>
+        <span class="nebula-particle" style="--x:0.5; --y:-0.7"></span>
+        <span class="nebula-particle" style="--x:0.9; --y:-0.4"></span>
+        <span class="nebula-particle" style="--x:0.2; --y:-0.2"></span>
+        <span class="nebula-particle" style="--x:0.1; --y:0.9"></span>
+      </div>
+    </div>
+    <button type="submit" class="button"><span>Buscar</span></button>
+  </form>
+</div>

@@ -1,0 +1,6 @@
+<form (ngSubmit)="sendSummonerName()">
+  <input type="text" [(ngModel)]="summonerName" name="invocador" placeholder="Escribe tu nombre de invocador" required />
+  <input type="text" [(ngModel)]="region" name="región" placeholder="región" required />
+  <input type="text" [(ngModel)]="summonerTag" name="tag" placeholder="tag" required />
+  <button type="submit">Enviar</button>
+</form>

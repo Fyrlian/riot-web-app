@@ -1,0 +1,13 @@
+<div>
+  <!-- Información básica del invocador -->
+  <app-summoner-data [summonerInfo]="summonerInfo"></app-summoner-data>
+
+  <!-- División, winrate, etc. -->
+  <app-league-info [leagueInfo]="leagueInfo" (queueTypeChanged)="onQueueTypeChange($event)"></app-league-info>
+
+</div>
+
+<!-- if theres no info from summoner -->
+<div *ngIf="!summonerInfo">
+  <p>Cargando información del invocador...</p>
+</div>
