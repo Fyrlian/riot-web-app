@@ -1,0 +1,15 @@
+riot-profile-app/node_modules/
+riot-profile-app/dist/
+riot-profile-app/.angular/
+
+RIOTNET/RiotWebProfiles/bin/
+RIOTNET/RiotWebProfiles/obj/
+RIOTNET/RiotWebProfiles/*.user
+RIOTNET/RiotWebProfiles/*.suo
+RIOTNET/RiotWebProfiles/*.cache
+RIOTNET/RiotWebProfiles/*.log
+RIOTNET/RiotWebProfiles/.vs/
+RIOTNET/RiotWebProfiles/*.pdb
+RIOTNET/RiotWebProfiles/*.exe
+RIOTNET/RiotWebProfiles/*.dll
+RIOTNET/RiotWebProfiles/*.appsettings.json
