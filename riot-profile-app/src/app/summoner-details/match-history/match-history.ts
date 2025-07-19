@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatchDto } from '../../models/match-history.info';
 
 @Component({
   selector: 'app-match-history',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './match-history.css'
 })
 export class MatchHistory {
+
+  // the data used on Input is declared on the HTML of the father component
+  @Input() matchHistory!: MatchDto[] | null;
 
 }

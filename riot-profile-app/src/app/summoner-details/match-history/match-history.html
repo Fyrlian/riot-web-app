@@ -1,1 +1,4 @@
-<p>match-history works!</p>
+<div *ngFor="let match of matchHistory">
+  <h3>Cola: {{ match.info.queueId }}</h3>
+  <p>Duración: {{ match.info.gameDuration }} segundos</p>
+</div>

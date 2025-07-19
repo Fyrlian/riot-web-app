@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SummonerInfoDTO } from './models/summoner.info';
 import { LeagueInfoDTO } from './models/league.info';
+import { MatchDto } from './models/match-history.info';
 
 //services that allows connection to the back (.net)
 @Injectable({ providedIn: 'root' })                         //allows to inject the class in other components or services using Singleton patterns
@@ -26,4 +27,15 @@ export class SummonerService {
   getLeagueInfo(region:string, gameName:string, tagLine:string, queueType:string){
     return this.http.get<LeagueInfoDTO>(`${this.apiUrl}/${region}/${gameName}/${tagLine}/${queueType}`);
   }
+
+  //[HttpGet("{region}/{gameName}/{tagLine}/{count}/{queueType}/matches")]
+  getMatches(region:string,gameName:string,tagLine:string,queueType:string,count:number){
+    return this.http.get<string[]>(`${this.apiUrl}/${region}/${gameName}/${tagLine}/${queueType}/matches`);
+  }
+
+  //[HttpGet("{region}/{matchId}")]
+  getMatchInfo(region:string,matchId:string){
+    return this.http.get<MatchDto>(`${this.apiUrl}/${region}/${matchId}`);
+  }
+
 }

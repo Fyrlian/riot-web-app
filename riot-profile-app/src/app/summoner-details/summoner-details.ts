@@ -8,6 +8,7 @@ import { MatchHistory } from './match-history/match-history';
 import { SummonerData } from './summoner-data/summoner-data';
 import { LeagueInfoDTO } from '../models/league.info';
 import { SummonerService } from '../summoner.service';
+import { MatchDto } from '../models/match-history.info';
 
 @Component({
   selector: 'app-summoner-details',
@@ -21,6 +22,8 @@ export class SummonerDetails implements OnInit {
   summonerInfo: SummonerInfoDTO | null = null;
   leagueInfo: LeagueInfoDTO | null = null;
   currentQueueType: string = 'RANKED_SOLO_5x5';
+  matchHistory: MatchDto[] | null = null;
+  count: number = 20;
 
   constructor(private stateService: SummonerStateService, private summonerService: SummonerService, private route: ActivatedRoute,) {}
 
@@ -38,6 +41,8 @@ export class SummonerDetails implements OnInit {
           next: data => {
             this.summonerInfo = data;
             this.loadLeagueInfo(region, name, tag, this.currentQueueType);
+            this.loadMatchHistory(region,name,tag,this.currentQueueType,this.count)
+            //(region:string,name:string,tag:string,queueType:string,count:number)
           },
           error: err => console.error('Error obteniendo invocador', err)
         });
@@ -65,4 +70,22 @@ export class SummonerDetails implements OnInit {
       error: err => console.error('Error obteniendo liga', err)
     });
   }
+
+  //loads the matchHistory on an array
+  loadMatchHistory(region:string,name:string,tag:string,queueType:string,count:number){
+    this.summonerService.getMatches(region,name,tag,queueType,count).subscribe({
+      next: ids => {
+        ids.forEach(id => {
+          this.summonerService.getMatchInfo(region,id).subscribe({
+            next: match => {
+              this.matchHistory?.push(match); //adds the match to the array
+            },
+            error: err => console.error('Error when obtaining the info about a match', err)
+          });
+        });
+      },
+      error: err => console.error('Error when obtaining the matches ID on summoner controller', err)
+    });   
+  }
+
 }

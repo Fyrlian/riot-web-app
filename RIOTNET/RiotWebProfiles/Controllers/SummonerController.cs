@@ -62,23 +62,33 @@ namespace RiotWebProfiles.Controllers
 
         }
 
-    [HttpGet("{region}/{puuid}/{count}/{queueType}/matches")]
-    public async Task<ActionResult<List<MatchDto>>> getMatches(string region, string puuid, int count, string queueType)
+        [HttpGet("{region}/{gameName}/{tagLine}/{count}/{queueType}/matches")]
+        public async Task<ActionResult<List<MatchDto>>> getMatches(string gameName, string tagLine, string region, int count, string queueType)
         {
-        var matchIds = await _riotService.getMatchIds(puuid, queueType, count, region);
-        if (matchIds == null)
-            return NotFound("No se encontraron partidas para este PUUID.");
+            var matchIds = await _riotService.getMatchIds(gameName, tagLine, queueType, count, region);
+            if (matchIds == null)
+                return NotFound("Theres no INFO for match IDs for this summoner");
 
-         var matches = new List<MatchDto>();
-         
-        foreach (var matchId in matchIds )
+            var matches = new List<MatchDto>();
+
+            foreach (var matchId in matchIds)
             {
                 var match = await _riotService.getMatchInfo(matchId, region);
                 if (match != null)
                     matches.Add(match);
             }
 
-        return Ok(matches);
+            return Ok(matches);
+        }
+    
+    [HttpGet("{region}/{matchId}")]
+    public async Task<ActionResult<List<MatchDto>>> getMatchInfo(string matchId, string region)
+        {
+        var matchInfo = await _riotService.getMatchInfo(matchId,region);
+        if (matchInfo == null)
+            return NotFound("Theres no info for this match ID");
+
+        return Ok(matchInfo);
         }
     }
 }

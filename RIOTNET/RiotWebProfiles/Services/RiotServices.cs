@@ -136,8 +136,12 @@ namespace RiotWebProfiles.Services
 
         }
 
-        public async Task<List<string>> getMatchIds(string puuid, string type, int count, string region)     //get matches id
+        public async Task<List<string>> getMatchIds(string gameName, string tagLine, string type, int count, string region)     //get matches id
         {
+            var summoner = await getSummonerByRiotId(gameName, tagLine, region);
+
+            var puuid = summoner.puuid;
+
             var url = $"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?count={count}&type={type}";
             _logger.LogInformation("URL: {Url}", url);
 
