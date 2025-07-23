@@ -136,14 +136,14 @@ namespace RiotWebProfiles.Services
 
         }
 
-        public async Task<List<string>> getMatchIds(string gameName, string tagLine, string type, int count, string region)     //get matches id
+        public async Task<List<string>> getMatchIds(string region,string gameName, string tagLine, int count, string type)     //get matches id
         {
             var summoner = await getSummonerByRiotId(gameName, tagLine, region);
 
             var puuid = summoner.puuid;
 
             var url = $"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?count={count}&type={type}";
-            _logger.LogInformation("URL: {Url}", url);
+            _logger.LogInformation("Get match IDS URL: {Url}", url);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("X-Riot-Token", _apiKey);
@@ -165,7 +165,7 @@ namespace RiotWebProfiles.Services
             return matchId;
         }
 
-        public async Task<MatchDto> getMatchInfo(string matchId, string region)     //get matches by id
+        public async Task<MatchDto> getMatchInfo(string region,string matchId)     //get matches by id
         {
             var url = $"https://{region}.api.riotgames.com/lol/match/v5/matches/{matchId}";
             _logger.LogInformation("URL: {Url}", url);

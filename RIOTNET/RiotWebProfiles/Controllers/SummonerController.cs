@@ -62,10 +62,11 @@ namespace RiotWebProfiles.Controllers
 
         }
 
+//check this method if it should return string of IDS or MatchDTO probably ID list thats the issue
         [HttpGet("{region}/{gameName}/{tagLine}/{count}/{queueType}/matches")]
-        public async Task<ActionResult<List<MatchDto>>> getMatches(string gameName, string tagLine, string region, int count, string queueType)
+        public async Task<ActionResult<List<MatchDto>>> getMatches( string region,string gameName, string tagLine, int count, string queueType)
         {
-            var matchIds = await _riotService.getMatchIds(gameName, tagLine, queueType, count, region);
+            var matchIds = await _riotService.getMatchIds(region,gameName, tagLine, count, queueType);
             if (matchIds == null)
                 return NotFound("Theres no INFO for match IDs for this summoner");
 
@@ -73,7 +74,7 @@ namespace RiotWebProfiles.Controllers
 
             foreach (var matchId in matchIds)
             {
-                var match = await _riotService.getMatchInfo(matchId, region);
+                var match = await _riotService.getMatchInfo(region, matchId);
                 if (match != null)
                     matches.Add(match);
             }
@@ -82,9 +83,9 @@ namespace RiotWebProfiles.Controllers
         }
     
     [HttpGet("{region}/{matchId}")]
-    public async Task<ActionResult<List<MatchDto>>> getMatchInfo(string matchId, string region)
+    public async Task<ActionResult<List<MatchDto>>> getMatchInfo(string region, string matchId)
         {
-        var matchInfo = await _riotService.getMatchInfo(matchId,region);
+        var matchInfo = await _riotService.getMatchInfo(region,matchId);
         if (matchInfo == null)
             return NotFound("Theres no info for this match ID");
 

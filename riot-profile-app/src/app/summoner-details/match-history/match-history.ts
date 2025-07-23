@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { MatchDto } from '../../models/match-history.info';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-match-history',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './match-history.html',
   styleUrl: './match-history.css'
 })

@@ -77,7 +77,7 @@ namespace RiotWebProfiles.Models
         public int playerSubteamId { get; set; }
         public required string puuid { get; set; }
         public int quadraKills { get; set; }
-        public required string riotIdName { get; set; }
+        public required string riotIdGameName { get; set; }
         public required string riotIdTagline { get; set; }
         public string role { get; set; } = string.Empty;
         public int sightWardsBoughtInGame { get; set; }

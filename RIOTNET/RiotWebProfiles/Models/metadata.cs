@@ -6,6 +6,6 @@ namespace RiotWebProfiles.Models
 {
     public string DataVersion { get; set; }
     public string MatchId { get; set; }
-    public List<ParticipantDto> Participants { get; set; }
+    public List<String> Participants { get; set; }
 }
 }

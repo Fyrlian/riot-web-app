@@ -9,6 +9,7 @@ import { SummonerData } from './summoner-data/summoner-data';
 import { LeagueInfoDTO } from '../models/league.info';
 import { SummonerService } from '../summoner.service';
 import { MatchDto } from '../models/match-history.info';
+import { queue } from 'rxjs';
 
 @Component({
   selector: 'app-summoner-details',
@@ -22,7 +23,7 @@ export class SummonerDetails implements OnInit {
   summonerInfo: SummonerInfoDTO | null = null;
   leagueInfo: LeagueInfoDTO | null = null;
   currentQueueType: string = 'RANKED_SOLO_5x5';
-  matchHistory: MatchDto[] | null = null;
+  matchHistory: MatchDto[] = [];
   count: number = 20;
 
   constructor(private stateService: SummonerStateService, private summonerService: SummonerService, private route: ActivatedRoute,) {}
@@ -41,7 +42,7 @@ export class SummonerDetails implements OnInit {
           next: data => {
             this.summonerInfo = data;
             this.loadLeagueInfo(region, name, tag, this.currentQueueType);
-            this.loadMatchHistory(region,name,tag,this.currentQueueType,this.count)
+            this.loadMatchHistory(region,name,tag,"ranked",this.count)
             //(region:string,name:string,tag:string,queueType:string,count:number)
           },
           error: err => console.error('Error obteniendo invocador', err)
@@ -73,8 +74,10 @@ export class SummonerDetails implements OnInit {
 
   //loads the matchHistory on an array
   loadMatchHistory(region:string,name:string,tag:string,queueType:string,count:number){
-    this.summonerService.getMatches(region,name,tag,queueType,count).subscribe({
+    count = this.count; //modify in case of loading more games
+      this.summonerService.getMatches(region,name,tag,count,queueType).subscribe({
       next: ids => {
+        console.log("Number of ID received:",ids.length,ids)
         ids.forEach(id => {
           this.summonerService.getMatchInfo(region,id).subscribe({
             next: match => {
@@ -85,7 +88,7 @@ export class SummonerDetails implements OnInit {
         });
       },
       error: err => console.error('Error when obtaining the matches ID on summoner controller', err)
-    });   
+    });  
   }
 
 }
