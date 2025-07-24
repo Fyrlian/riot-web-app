@@ -54,7 +54,7 @@ namespace RiotWebProfiles.Services
         public async Task<SummonerInfo> getSummonerInfoByRiotId(string gameName, string tagLine, string region)
         {
             var summoner = await getSummonerByRiotId(gameName, tagLine, region);
-
+            
             var puuid = summoner.puuid;
 
             string regionShorten = "";
@@ -128,13 +128,13 @@ namespace RiotWebProfiles.Services
 
         }
 
-        public async Task<List<string>> getMatchIds(string region,string gameName, string tagLine, int count, string type)     //get matches id
+        public async Task<List<string>> getMatchIds(string region,string gameName, string tagLine, int count, int queue)     //get matches id
         {
             var summoner = await getSummonerByRiotId(gameName, tagLine, region);
 
             var puuid = summoner.puuid;
 
-            var url = $"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?count={count}&type={type}";
+            var url = $"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?count={count}&queue={queue}";
             _logger.LogInformation("Get match IDS URL: {Url}", url);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -157,14 +157,17 @@ namespace RiotWebProfiles.Services
             return matchId;
         }
 
-        public async Task<MatchDto> getMatchInfo(string region,string matchId)     //get matches by id
+        //gets match information from RIOT's API using the region of the game and the ID.
+        public async Task<MatchDto> getMatchInfo(string region, string matchId)
         {
             var url = $"https://{region}.api.riotgames.com/lol/match/v5/matches/{matchId}";
-            _logger.LogInformation("URL: {Url}", url);
+            _logger.LogInformation("URL: {url}", url);
 
+            //creates the request and adds the api key.
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("X-Riot-Token", _apiKey);
 
+            //stores the response
             var response = await _httpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -172,13 +175,16 @@ namespace RiotWebProfiles.Services
                 return null;
             }
 
+            //stores the content of the response
             var json = await response.Content.ReadAsStringAsync();
 
+            //deseriales the JSON matching the clasas MatchDto properties (not caring about uppercase)
             var matchInfo = JsonSerializer.Deserialize<MatchDto>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
+            //returns the information
             return matchInfo;
         }
     }

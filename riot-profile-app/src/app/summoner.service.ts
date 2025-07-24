@@ -29,8 +29,8 @@ export class SummonerService {
   }
 
   //[HttpGet("{region}/{gameName}/{tagLine}/{count}/{queueType}/matches")]
-  getMatches(region:string,gameName:string,tagLine:string,count:number,queueType:string){
-    return this.http.get<string[]>(`${this.apiUrl}/${region}/${gameName}/${tagLine}/${count}/${queueType}/matches`);
+  getMatches(region:string,gameName:string,tagLine:string,count:number,queue:number){
+    return this.http.get<string[]>(`${this.apiUrl}/${region}/${gameName}/${tagLine}/${count}/${queue}/matches`);
   }
 
   //[HttpGet("{region}/{matchId}")]

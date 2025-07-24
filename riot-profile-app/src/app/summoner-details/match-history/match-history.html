@@ -1,14 +1,24 @@
 <div *ngFor="let match of matchHistory">
-  <h3>Cola: {{ match.info.gameId }}</h3>
+  <h3>Queue: {{ match.info.gameId }}</h3>
   <ul>
-  <li *ngFor="let participant of match.info.participants">
-    {{ participant.itemsPurchased }} - {{ participant.championName }}
-  </li>
+    <ng-container *ngFor="let participant of match.info.participants; let i = index">
+      <li *ngIf="i < 5">
+      {{ participant.championName }} - {{ participant.kills }}/{{ participant.deaths }}/{{ participant.assists }}
+      </li>
+    </ng-container>
   </ul>
-    <ul>
+
+  <ul>
+  <ng-container *ngFor="let participant of match.info.participants; let i = index">
+    <li *ngIf="i >= 5">
+      {{ participant.championName }} - {{ participant.kills }}/{{ participant.deaths }}/{{ participant.assists }}
+    </li>
+  </ng-container>
+</ul>
+
   <li *ngFor="let team of match.info.teams">
     {{ team.win }}
   </li>
-  </ul>
-  <p>Duración: {{ match.info.gameDuration }} segundos</p>
+
+  <p>Game duration: {{ match.info.gameDuration }} seconds</p>
 </div>

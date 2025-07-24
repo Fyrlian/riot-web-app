@@ -65,11 +65,11 @@ namespace RiotWebProfiles.Controllers
 
         }
 
-//check this method if it should return string of IDS or MatchDTO probably ID list thats the issue
-        [HttpGet("{region}/{gameName}/{tagLine}/{count}/{queueType}/matches")]
-        public async Task<ActionResult<List<String>>> getMatches( string region,string gameName, string tagLine, int count, string queueType)
+        //check this method if it should return string of IDS or MatchDTO probably ID list thats the issue
+        [HttpGet("{region}/{gameName}/{tagLine}/{count}/{queue}/matches")]
+        public async Task<ActionResult<List<String>>> getMatches( string region,string gameName, string tagLine, int count, int queue)
         {
-            var matchIds = await _riotService.getMatchIds(region,gameName, tagLine, count, queueType);
+            var matchIds = await _riotService.getMatchIds(region,gameName, tagLine, count, queue);
             if (matchIds == null)
             {
                 return NotFound("No matches for this summoner");
@@ -77,15 +77,19 @@ namespace RiotWebProfiles.Controllers
 
             return Ok(matchIds);
         }
-    
-    [HttpGet("{region}/{matchId}")]
-    public async Task<ActionResult<List<MatchDto>>> getMatchInfo(string region, string matchId)
-        {
-        var matchInfo = await _riotService.getMatchInfo(region,matchId);
-        if (matchInfo == null)
-            return NotFound("Theres no info for this match ID");
 
-        return Ok(matchInfo);
+        //controller for the game information
+        [HttpGet("{region}/{matchId}")]
+        
+        //gets the parameters from the front-end request
+        public async Task<ActionResult<List<MatchDto>>> getMatchInfo(string region, string matchId)
+        {
+            //stores the info returned by the service
+            var matchInfo = await _riotService.getMatchInfo(region, matchId);
+            if (matchInfo == null)
+                return NotFound("theres no info for this match ID");
+
+            return Ok(matchInfo);
         }
     }
 }
