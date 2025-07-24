@@ -2,10 +2,9 @@
 <select (change)="onQueueTypeChange($event)">
   <option value="RANKED_SOLO_5x5">Ranked Solo</option>
   <option value="RANKED_FLEX_SR">Ranked Flex</option>
-  <option value="RANKED_TFT">Teamfight Tactics</option>
 </select>
 <p>Rango: {{ leagueInfo?.tier }} {{ leagueInfo?.rank }} ({{ leagueInfo?.leaguePoints }} LP)</p>
 <p>Victorias: {{ leagueInfo?.wins }}</p>
 <p>Derrotas: {{ leagueInfo?.losses }}</p>
 <p>Racha activa: {{ leagueInfo?.hotStreak ? 'Sí' : 'No' }}</p>
-<p>Winrate: {{ leagueInfo?.winrate}}</p>
+<p>Winrate: {{ leagueInfo?.winrate}}%</p>

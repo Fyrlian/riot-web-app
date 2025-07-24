@@ -57,6 +57,9 @@ namespace RiotWebProfiles.Controllers
             }
             else
             {
+
+                leagueInfo.winrate = (leagueInfo.wins * 100) / (leagueInfo.wins + leagueInfo.losses);
+
                 return Ok(leagueInfo);
             }
 
@@ -64,22 +67,15 @@ namespace RiotWebProfiles.Controllers
 
 //check this method if it should return string of IDS or MatchDTO probably ID list thats the issue
         [HttpGet("{region}/{gameName}/{tagLine}/{count}/{queueType}/matches")]
-        public async Task<ActionResult<List<MatchDto>>> getMatches( string region,string gameName, string tagLine, int count, string queueType)
+        public async Task<ActionResult<List<String>>> getMatches( string region,string gameName, string tagLine, int count, string queueType)
         {
             var matchIds = await _riotService.getMatchIds(region,gameName, tagLine, count, queueType);
             if (matchIds == null)
-                return NotFound("Theres no INFO for match IDs for this summoner");
-
-            var matches = new List<MatchDto>();
-
-            foreach (var matchId in matchIds)
             {
-                var match = await _riotService.getMatchInfo(region, matchId);
-                if (match != null)
-                    matches.Add(match);
+                return NotFound("No matches for this summoner");
             }
 
-            return Ok(matches);
+            return Ok(matchIds);
         }
     
     [HttpGet("{region}/{matchId}")]

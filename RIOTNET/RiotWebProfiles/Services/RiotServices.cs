@@ -124,14 +124,6 @@ namespace RiotWebProfiles.Services
 
             var soloQueue = leagueInfo?.FirstOrDefault(l => l.queueType == queueTypeFront);
 
-            var wins = soloQueue.wins;
-
-            var losses = soloQueue.losses;
-
-            var winrate = (wins / (wins + losses)) * 100;
-
-            soloQueue.winrate = winrate;
-
             return soloQueue;
 
         }

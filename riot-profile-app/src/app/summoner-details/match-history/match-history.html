@@ -1,4 +1,14 @@
 <div *ngFor="let match of matchHistory">
-  <h3>Cola: {{ match.info.queueId }}</h3>
+  <h3>Cola: {{ match.info.gameId }}</h3>
+  <ul>
+  <li *ngFor="let participant of match.info.participants">
+    {{ participant.itemsPurchased }} - {{ participant.championName }}
+  </li>
+  </ul>
+    <ul>
+  <li *ngFor="let team of match.info.teams">
+    {{ team.win }}
+  </li>
+  </ul>
   <p>Duración: {{ match.info.gameDuration }} segundos</p>
 </div>
